@@ -22,7 +22,7 @@ var satList = ['62.1','93.6','100'] //[0]background [1]orange [2]pink
 function preload() {
   saxSound=loadSound('./assets/soiSax.mp3');
   brassSound=loadSound('./assets/soiBrass.mp3');
-  backingSound=loadSound('./assets/soiBacking.mp3');
+  backingSound=loadSound('./assets/soiAll.mp3');
 
   jazzPlayer=loadImage('./assets/jazzPlayer.png');
   jazztime=loadImage('./assets/jazztime.png');
@@ -65,6 +65,8 @@ function draw() {
     if (backingSound.isPlaying() === false) {
       saxSound.play();
       brassSound.play();
+      saxSound.setVolume(0);
+      brassSound.setVolume(0);
       backingSound.play();
     }
 
@@ -74,6 +76,7 @@ function draw() {
     push();
     translate(0,vol2*100);
     image(jazzPlayer,-120,-250,900/1.2,780/1.2);
+
     blendMode(MULTIPLY);
     pop();
 
@@ -111,16 +114,16 @@ function draw() {
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(100,-300,600,vol2,800,50,vol4,-30,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(100,-300,600,vol4,800,50,vol2,-30,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(300,-260,600,vol2,1000,20,vol4,-60,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(300,-260,600,vol4,1000,20,vol2,-60,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
   push();
   blendMode(MULTIPLY);
-  backing.rect(-100,260,600,vol2,800,60,vol4,-60,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(-100,260,600,vol4,800,60,vol2,-60,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
@@ -161,7 +164,7 @@ function allStop() {saxSound.stop(); brassSound.stop(); backingSound.stop();}
 function allPlay() {saxSound.play(); brassSound.play(); backingSound.play();}
 function soloSax() {saxSound.setVolume(1); brassSound.setVolume(0); backingSound.setVolume(0);}
 function soloBrass() {brassSound.setVolume(1); saxSound.setVolume(0); backingSound.setVolume(0);}
-function allReset() {saxSound.setVolume(1);brassSound.setVolume(1); backingSound.setVolume(1);}
+function allReset() {saxSound.setVolume(0);brassSound.setVolume(0); backingSound.setVolume(1);}
 
 function windowResized() {resizeCanvas(windowWidth,windowHeight);}
 
