@@ -8,10 +8,17 @@ var analyzer_vol;
 var saxSound;
 var brassSound;
 var backingSound;
-var circleSize;
-var pos_x;
-var pos_y;
 var compSize;
+var mx;
+var my;
+var activRadius1=380;
+var activX1 = -400;
+var activY1 = -350;
+var activRadius2=400;
+var activX2 = 260;
+var activY2 = 190;
+var satList = ['62.1','93.6','100'] //[0]background [1]orange [2]pink
+
 function preload() {
   saxSound=loadSound('./assets/soiSax.mp3');
   brassSound=loadSound('./assets/soiBrass.mp3');
@@ -27,6 +34,7 @@ function setup() {
   noStroke();
   rectMode(CENTER);
   angleMode(DEGREES);
+  colorMode(HSL);
 
 
   analyzerSax = new p5.Amplitude();
@@ -43,7 +51,6 @@ function setup() {
 }
 
 function draw() {
-
   var vol = analyzerSax.getLevel();
   var vol2 = analyzerBrass.getLevel();
   var vol4 = analyzerBacking.getLevel();
@@ -61,24 +68,28 @@ function draw() {
       backingSound.play();
     }
 
-    push()
-    background(244, 237, 208,180);
+    push();
+    background(48,satList[0], 88.6,180);
     if(width==height) {translate(-90,20)};
     push();
     translate(0,vol2*100);
     image(jazzPlayer,-120,-250,900/1.2,780/1.2);
     blendMode(MULTIPLY);
     pop();
-    fill(247, 123, 14,230);
-    rotate(30);
+
+    fill(28,satList[1], 51.2,230);
     blendMode(DARKEST);
-    rect(150,400,width*0.6,height);
+    // rotate(30);
+    // rect(150,400,width*0.6,height);
+    backing.rect(150,400,width*0.6,vol4,10,height,vol4,100,30,color(28,satList[1], 51.2,230))
     push();
-    rotate(15);
-    rect(-500,700,width*0.1,height);
+    // rotate(15);
+    // rect(-500,700,width*0.1,height);
+    backing.rect(-500,700,width*0.1,vol4,10,height,vol4,30,15,color(28,satList[1], 51.2,230))
     pop();
-    rotate(-20);
-    rect(0,-400,width*1.5,height*0.5);
+    // rotate(-20);
+    // rect(0,-400,width*1.5,height*0.5);
+    backing.rect(0,-400,width*1.5,vol4,10,height*0.5,vol4,20,-20,color(28,satList[1], 51.2,230))
     pop();
 
   } else {
@@ -88,47 +99,53 @@ function draw() {
     background(50)
   }
 
-
   push();
   blendMode(MULTIPLY);
-  sax.fullCircle(-400,-250,500,100,vol,color(255, 73, 167)); //pos_x,pos_y,circleSize,multiplier,analyzer_vol,fullCol
+  sax.fullCircle(-400,-250,500,100,vol,color(329,satList[2], 64.3)); //pos_x,pos_y,circleSize,multiplier,analyzer_vol,fullCol
   blendMode(BLEND);
   // sax.holeCircle(-370,-30,800,3,500,vol,244, 237, 208); //pos_x,pos_y,circleSize,sized,multiplier,analyzer_vol,bg_col
   blendMode(MULTIPLY);
-  brass.fullCircle(0,50,200,800,vol2,color(255, 73, 167,200));
-  brass.fullCircle(130,-120,100,300,vol2,color(255, 73, 167,200));
+  brass.fullCircle(0,50,200,800,vol2,color(329,satList[3], 64.3,200));
+  brass.fullCircle(130,-120,100,300,vol2,color(329,satList[3], 64.3,200));
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(100,-300,600,vol2,800,50,vol4,-30,30,color(255, 73, 167)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(100,-300,600,vol2,800,50,vol4,-30,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(300,-260,600,vol2,1000,20,vol4,-60,30,color(255, 73, 167)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(300,-260,600,vol2,1000,20,vol4,-60,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
   push();
   blendMode(MULTIPLY);
-  backing.rect(-100,260,600,vol2,800,60,vol4,-60,-30,color(255, 73, 167)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(-100,260,600,vol2,800,60,vol4,-60,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
-  rotate(-30+vol*6);
+  rotate(-30+vol*7);
   scale(0.3);
   blendMode(MULTIPLY);
   if(width==height) {translate(width*1.1,height*0.4);}
   image(jazztime,-1600,-1200);
 
   pop();
+
+  //ACTIVATOR GUIDES
+  push();
+  translate(0,0);
+  // fill(45,45,45,80);
+  noFill();
+  noStroke();
+  ellipse(activX1,activY1,activRadius1*2);
+  ellipse(activX2,activY2,activRadius2*2);
+  pop();
+
 }
 
 function Instrument() {
 
-  this.holeCircle = function(pos_x,pos_y,circleSize,sized,multiplier,analyzer_vol,bg_col) {
-    fill(bg_col);
-    ellipse(pos_x,pos_y,circleSize/sized+analyzer_vol*multiplier,circleSize/sized+analyzer_vol*multiplier);
-  }
   this.fullCircle = function(pos_x,pos_y,circleSize,multiplier,analyzer_vol,fullCol) {
     fill(fullCol);
     ellipse(pos_x,pos_y,circleSize+analyzer_vol*multiplier,circleSize+analyzer_vol*multiplier);
@@ -148,17 +165,13 @@ function allReset() {saxSound.setVolume(1);brassSound.setVolume(1); backingSound
 
 function windowResized() {resizeCanvas(windowWidth,windowHeight);}
 
-var distActivator = circleSize/1.5
-
 function mouseMoved(){
+  var dr1 = dist(mx,my,activX1,activY1);
+  var dr2 = dist(mx,my,activX2,activY2);
+  mx = mouseX-width/2;
+  my = mouseY-height/2;
 
-  // var dr1 = dist(mx,my,pos_x,pos_y);
-  // var dr2 = dist(mx,my,pos2x,pos2y);
-  // var dr3 = dist(mx,my,pos3x,pos3y);
-  // mx = mouseX - width/2;
-  // my = mouseY - height/2;
-  // saxSound.amp(1-dr1/1000);
-  // brassSound.amp(1-dr2/1000);
-  // if(dr1<distActivator) {soloSax();}
-  // if(dr2<distActivator) {solobrass();}
+  if(dr1<activRadius1 && dr1 !==0) {soloSax(); satList[0]=0; satList[1]=0; satList[3]=0;}
+  else if(dr2<activRadius2) {soloBrass(); satList[0]=0; satList[1]=0; satList[2]=0;}
+  else{allReset(); bgSat=62.1; satList[0]=62.1; satList[1]=93.6; satList[2]=100; satList[3]=100;}
 }
