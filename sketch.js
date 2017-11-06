@@ -174,7 +174,7 @@ function mouseMoved(){
   mx = mouseX-width/2;
   my = mouseY-height/2;
 
-  if(dr1<activRadius1 && dr1 !==0) {soloSax(); satList[0]=0; satList[1]=0; satList[3]=0;}
-  else if(dr2<activRadius2) {soloBrass(); satList[0]=0; satList[1]=0; satList[2]=0;}
+  if(dr1<activRadius1 && dr1 !==0) {soloSax(); satList[0]=0; satList[1]=0; satList[2]=100; satList[3]=0;}
+  else if(dr2<activRadius2) {soloBrass(); satList[0]=0; satList[1]=0; satList[2]=0; satList[3]=100;}
   else{allReset(); bgSat=62.1; satList[0]=62.1; satList[1]=93.6; satList[2]=100; satList[3]=100;}
 }
