@@ -17,7 +17,7 @@ var activY1 = -350;
 var activRadius2=400;
 var activX2 = 260;
 var activY2 = 190;
-var satList = ['62.1','93.6','100'] //[0]background [1]orange [2]pink
+var satList = ['62.1','93.6','100','100'] //[0]background [1]orange [2]pink
 
 function preload() {
   saxSound=loadSound('./assets/soiSax.mp3');
@@ -65,16 +65,19 @@ function draw() {
     if (backingSound.isPlaying() === false) {
       saxSound.play();
       brassSound.play();
+      backingSound.play();
       saxSound.setVolume(0);
       brassSound.setVolume(0);
-      backingSound.play();
+
     }
+var volSwitch2 = vol4*30
+if(satList[2]==0) {volSwitch2=vol2*100}
 
     push();
     background(48,satList[0], 88.6,180);
     if(width==height) {translate(-90,20)};
     push();
-    translate(0,vol2*100);
+    translate(0,volSwitch2);
     image(jazzPlayer,-120,-250,900/1.2,780/1.2);
 
     blendMode(MULTIPLY);
@@ -82,16 +85,8 @@ function draw() {
 
     fill(28,satList[1], 51.2,230);
     blendMode(DARKEST);
-    // rotate(30);
-    // rect(150,400,width*0.6,height);
     backing.rect(150,400,width*0.6,vol4,10,height,vol4,100,30,color(28,satList[1], 51.2,230))
-    push();
-    // rotate(15);
-    // rect(-500,700,width*0.1,height);
     backing.rect(-500,700,width*0.1,vol4,10,height,vol4,30,15,color(28,satList[1], 51.2,230))
-    pop();
-    // rotate(-20);
-    // rect(0,-400,width*1.5,height*0.5);
     backing.rect(0,-400,width*1.5,vol4,10,height*0.5,vol4,20,-20,color(28,satList[1], 51.2,230))
     pop();
 
@@ -106,7 +101,6 @@ function draw() {
   blendMode(MULTIPLY);
   sax.fullCircle(-400,-250,500,100,vol,color(329,satList[2], 64.3)); //pos_x,pos_y,circleSize,multiplier,analyzer_vol,fullCol
   blendMode(BLEND);
-  // sax.holeCircle(-370,-30,800,3,500,vol,244, 237, 208); //pos_x,pos_y,circleSize,sized,multiplier,analyzer_vol,bg_col
   blendMode(MULTIPLY);
   brass.fullCircle(0,50,200,800,vol2,color(329,satList[3], 64.3,200));
   brass.fullCircle(130,-120,100,300,vol2,color(329,satList[3], 64.3,200));
@@ -114,26 +108,32 @@ function draw() {
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(100,-300,600,vol4,800,50,vol2,-30,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(100,-300,600,vol4,800,50,vol2,30,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(300,-260,600,vol4,1000,20,vol2,-60,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
-  pop();
-  push();
-  blendMode(MULTIPLY);
-  backing.rect(-100,260,600,vol4,800,60,vol2,-60,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(300,-260,600,vol4,1000,20,vol2,60,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
-  rotate(-30+vol*7);
+  blendMode(MULTIPLY);
+  backing.rect(-100,260,600,vol4,800,60,vol2,60,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  pop();
+
+  var volSwitch1 = vol4*2
+  if(satList[3]==0) {volSwitch1=vol*7}
+
+  push();
+  rotate(-30+volSwitch1);
   scale(0.3);
   blendMode(MULTIPLY);
   if(width==height) {translate(width*1.1,height*0.4);}
   image(jazztime,-1600,-1200);
 
   pop();
+
+
 
   //ACTIVATOR GUIDES
   push();
