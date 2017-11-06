@@ -17,7 +17,7 @@ var activY1 = -350;
 var activRadius2=400;
 var activX2 = 260;
 var activY2 = 190;
-var satList = ['62.1','93.6','100','100'] //[0]background [1]orange [2]pink
+var satList = ['62.1','93.6','100','100'] //[0]background [1]orange [2]pinkSax [3]pinkBrass
 
 function preload() {
   saxSound=loadSound('./assets/soiSax.mp3');
@@ -71,7 +71,8 @@ function draw() {
 
     }
 var volSwitch2 = vol4*30
-if(satList[2]==0) {volSwitch2=vol2*100}
+var volSwitch3 = vol4*800
+if(satList[2]==0) {volSwitch2=vol2*100; volSwitch3=vol2*800}
 
     push();
     background(48,satList[0], 88.6,180);
@@ -102,23 +103,23 @@ if(satList[2]==0) {volSwitch2=vol2*100}
   sax.fullCircle(-400,-250,500,100,vol,color(329,satList[2], 64.3)); //pos_x,pos_y,circleSize,multiplier,analyzer_vol,fullCol
   blendMode(BLEND);
   blendMode(MULTIPLY);
-  brass.fullCircle(0,50,200,800,vol2,color(329,satList[3], 64.3,200));
-  brass.fullCircle(130,-120,100,300,vol2,color(329,satList[3], 64.3,200));
+  brass.fullCircle(0,50,200,1,volSwitch2,color(329,satList[3], 64.3,200));
+  brass.fullCircle(130,-120,100,1,volSwitch2,color(329,satList[3], 64.3,200));
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(100,-300,600,vol4,800,50,vol2,30,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(100,-300,600,volSwitch3,1,50,vol2,10,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(300,-260,600,vol4,1000,20,vol2,60,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(300,-260,600,volSwitch3,1,20,vol2,20,30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   push();
   blendMode(MULTIPLY);
-  backing.rect(-100,260,600,vol4,800,60,vol2,60,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
+  backing.rect(-100,260,600,volSwitch3,1,60,vol2,20,-30,color(329,satList[3], 64.3)); //pos_x,pos_y,rectWidth,analyzer_volW,multiplierW,rectHeight,analyzer_volH,multiplierH,rot,rectCol
   pop();
 
   var volSwitch1 = vol4*2
